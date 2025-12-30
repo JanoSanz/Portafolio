@@ -1,11 +1,367 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
+import WindowLayout from "../layouts/WindowLayout.astro";
+import ProfileMd from "../content/profile.md";
+import { projects } from "../data/projects";
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+const techs = ["HTML", "CSS", "JavaScript", "Astro"];
+
+const techColor = (t: string) => {
+  const m: Record<string, string> = {
+    HTML: "#ff6b6b",
+    CSS: "#4dabf7",
+    JavaScript: "#ffd43b",
+    Astro: "#ff5d01",
+  };
+
+  return m[t] ?? "#7c3aed";
+};
 ---
 
-<Layout>
-	<Welcome />
-</Layout>
+<WindowLayout title="Portafolio">
+  <div class="views" id="views" data-view="perfil">
+    <!-- PERFIL -->
+    <section class="view" data-name="perfil">
+      <div class="panel">
+        <div class="top">
+          <div class="avatar">
+            <img src="/images/me.jpg" alt="Foto" />
+          </div>
+
+          <div class="info">
+            <div class="name">TU NOMBRE</div>
+            <div class="meta">Edad: XX • Carrera: XXXXX</div>
+
+            <div class="tags">
+              {techs.map((t) => (
+                <span class="tag" style={`--c:${techColor(t)}`}>{t}</span>
+              ))}
+            </div>
+
+            <div class="cvBtns">
+              <a class="btn" href="/cv.pdf" target="_blank">Ver CV</a>
+              <a class="btn ghost" href="/cv.pdf" download>Descargar</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="bio">
+          <div class="bioHead">
+            <div class="bioTitle">Descripción / CV</div>
+          </div>
+
+          <div class="bioScroll">
+            <ProfileMd />
+          </div>
+        </div>
+      </div>
+    </section>
+
+<!-- PROYECTOS -->
+<section class="view" data-name="proyectos">
+  <div class="panel">
+    <div class="head">
+      <h2>Proyectos</h2>
+      <p>Algunos de los proyectos que fui construyendo.</p>
+    </div>
+	<div class="projectsScroll">
+		<div class="gridProjects">
+		{projects.map((p) => (
+			<article class="pCard">
+			<div class="pImg">
+				<img src={p.image} alt={p.title} loading="lazy" />
+			</div>
+
+			<div class="pInfo">
+				<div class="pTitle">{p.title}</div>
+
+				<div class="pTags">
+				{p.tech.map((t) => (
+					<span class="tag" style={`--c:${techColor(t)}`}>{t}</span>
+				))}
+				</div>
+
+				<div class="pDesc">{p.desc}</div>
+
+				{(p.demo || p.repo) && (
+				<div class="pLinks">
+					{p.demo && <a class="btn sm" href={p.demo} target="_blank">Demo</a>}
+					{p.repo && <a class="btn sm ghost" href={p.repo} target="_blank">Repo</a>}
+				</div>
+				)}
+			</div>
+			</article>
+		))}
+		</div>
+	</div>
+  </div>
+</section>
+
+    <!-- CONTACTO (placeholder) -->
+    <section class="view" data-name="contacto">
+      <div class="panel">
+        <h2>Contacto</h2>
+        <p>Después lo armamos.</p>
+      </div>
+    </section>
+  </div>
+
+  <script>
+	type ViewName = "perfil" | "proyectos" | "contacto";
+
+	const root = document.getElementById("views");
+	if (!root) throw new Error("No se encontró el contenedor #views");
+
+	const rootEl = root as HTMLElement;
+
+	function isViewName(v: string): v is ViewName {
+	return v === "perfil" || v === "proyectos" || v === "contacto";
+	}
+
+	function setView(name: ViewName) {
+	rootEl.dataset.view = name;
+	location.hash = name;
+	}
+
+	const initialRaw = location.hash.replace("#", "");
+	if (isViewName(initialRaw)) setView(initialRaw);
+
+	document.addEventListener("click", (e: MouseEvent) => {
+	const target = e.target;
+	if (!(target instanceof Element)) return;
+
+	const el = target.closest<HTMLElement>("[data-view-link]");
+	if (!el) return;
+
+	e.preventDefault();
+
+	const v = el.getAttribute("data-view-link") ?? "perfil";
+	if (isViewName(v)) setView(v);
+	});
+
+	window.addEventListener("hashchange", () => {
+	const v = location.hash.replace("#", "");
+	if (isViewName(v)) setView(v);
+	});
+
+  </script>
+
+  <style>
+    /* mostrar solo la vista activa */
+    .view{display:none}
+    .views[data-view="perfil"] .view[data-name="perfil"],
+    .views[data-view="proyectos"] .view[data-name="proyectos"],
+    .views[data-view="contacto"] .view[data-name="contacto"]{
+      display:block;
+      height:100%;
+    }
+
+    .panel{
+      height:100%;
+      border:1px solid #2a2a2a;
+      border-radius:14px;
+      background: linear-gradient(180deg, #0f0f12, #09090c);
+      padding:16px;
+    }
+
+    /* PERFIL */
+    .top{
+      display:grid;
+      grid-template-columns: 140px 1fr;
+      gap:14px;
+      padding:12px;
+      border:1px solid #222;
+      border-radius:12px;
+      background:#0b0b0b;
+    }
+
+    .avatar{
+      width:140px;height:140px;
+      border-radius:12px;
+      overflow:hidden;
+      border:1px solid #2a2a2a;
+      background:#070707;
+    }
+    .avatar img{width:100%;height:100%;object-fit:cover;display:block}
+
+    .name{font-size:22px;font-weight:900;color:#f0f0f0;margin-bottom:6px}
+    .meta{color:#bdbdbd;margin-bottom:10px}
+
+    .tags{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}
+    .tag{
+      padding:6px 10px;
+      border-radius:999px;
+      border:1px solid color-mix(in srgb, var(--c) 60%, #2a2a2a);
+      background: color-mix(in srgb, var(--c) 12%, #0b0b0b);
+      color:#eaeaea;
+      font-size:12px;
+    }
+
+    .cvBtns{display:flex;gap:10px;flex-wrap:wrap}
+    .btn{
+      padding:10px 12px;
+      border-radius:10px;
+      border:1px solid #2a2a2a;
+      text-decoration:none;
+      color:#eaeaea;
+      background:#121216;
+    }
+    .btn.ghost{background:transparent}
+    .btn:hover{border-color:#7c3aed}
+
+    .bio{
+      margin-top:14px;
+      padding:12px;
+      border:1px solid #222;
+      border-radius:12px;
+      background:#0b0b0b;
+    }
+    .bioTitle{
+      font-size:12px;
+      letter-spacing:2px;
+      color:#dcdcdc;
+      font-weight:800;
+      text-transform:uppercase;
+      margin-bottom:10px;
+    }
+
+    /* Markdown scrollable */
+    .bioScroll{
+      max-height: 320px; /* ajustable */
+      overflow:auto;
+      padding-right:8px;
+      color:#bdbdbd;
+      line-height:1.65;
+    }
+
+    .bioScroll :global(h2){color:#eaeaea;margin:10px 0}
+    .bioScroll :global(ul){margin:8px 0 8px 18px}
+    .bioScroll :global(a){color:#c4b5fd}
+	
+	/* Proyectos */
+    @media (max-width: 520px){
+      .top{grid-template-columns: 110px 1fr}
+      .avatar{width:110px;height:110px}
+      .bioScroll{max-height:260px}
+    }
+
+	.head h2{margin:0 0 6px 0}
+	.head p{margin:0 0 14px 0;color:#bdbdbd}
+
+	/* mobile */
+	.gridProjects{
+	display:grid;
+	gap:12px;
+	grid-template-columns: 1fr;
+	}
+	
+	/* PC: 2 columnas */
+	@media (min-width: 820px){
+	.gridProjects{
+		grid-template-columns: 1fr 1fr; 
+	}
+	}
+
+	.pCard{
+	display:flex;
+	gap:12px;
+	border:1px solid #222;
+	border-radius:14px;
+	background:#0b0b0b;
+	padding:12px;
+	min-height:140px;
+
+	transition: border-color 160ms ease, transform 160ms ease, box-shadow 160ms ease;
+	}
+
+	.pCard:hover{
+	border-color:#5ee7ff;
+	box-shadow: 0 0 0 3px rgba(94,231,255,.12);
+	transform: translateY(-2px);
+	}
+
+	.pCard:hover{
+	animation: glow 900ms ease-in-out infinite alternate;
+	}
+
+	@keyframes glow{
+	from { box-shadow: 0 0 0 3px rgba(94,231,255,.10); }
+	to   { box-shadow: 0 0 0 3px rgba(94,231,255,.22); }
+	}
+
+
+	.pImg{
+	width:140px;
+	height:110px;
+	border-radius:12px;
+	overflow:hidden;
+	border:1px solid #2a2a2a;
+	background:#070707;
+	flex: 0 0 auto;
+	}
+
+	.pImg img{
+	width:100%;
+	height:100%;
+	object-fit:cover;
+	display:block;
+	}
+
+	.pInfo{flex:1;min-width:0}
+	.pTitle{
+	font-weight:900;
+	color:#f0f0f0;
+	margin-bottom:8px;
+	font-size:16px;
+	}
+
+	.pTags{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:8px}
+
+	.pDesc{
+	color:#bdbdbd;
+	line-height:1.5;
+	font-size:13px;
+	display:-webkit-box;
+	-webkit-line-clamp:3;
+	-webkit-box-orient:vertical;
+	overflow:hidden;
+	}
+
+	.pLinks{margin-top:10px;display:flex;gap:10px;flex-wrap:wrap}
+	.btn.sm{padding:8px 10px;font-size:12px;border-radius:10px}
+
+	/* Panel Proyectos en columna */
+	.panelProjects{
+	display:flex;
+	flex-direction:column;
+	}
+
+	/* Esto genera el scroll cuando hay muchas cards */
+	.projectsScroll{
+	flex:1;
+	overflow:auto;
+	padding-right:10px;
+	scrollbar-width: thin;
+	scrollbar-color: #2a2a2a transparent;
+	}
+	.projectsScroll::-webkit-scrollbar{ width: 8px; }
+	.projectsScroll::-webkit-scrollbar-thumb{ background:#2a2a2a; border-radius:999px; }
+	.projectsScroll::-webkit-scrollbar-thumb:hover{ background:#3a3a3a; }
+
+	.panelProjects{
+	display:flex;
+	flex-direction:column;
+	height:100%;
+	min-height:0;
+	}
+
+	/* el scroll real */
+	.projectsScroll{
+	flex:1;
+	overflow:auto;
+	min-height:0;
+	padding-right:10px;
+	}
+
+
+	</style>
+</WindowLayout>
