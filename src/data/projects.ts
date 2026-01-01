@@ -2,7 +2,7 @@ export type Project = {
   title: string;
   desc: string;
   tech: string[];
-  image: string; // ruta en /public
+  image: string;
   demo?: string;
   repo?: string;
 };
@@ -12,7 +12,7 @@ export const projects: Project[] = [
     title: "Solo UI System",
     desc: "UI estilo RPG con cards, stats y animaciones suaves.",
     tech: ["HTML", "CSS", "JavaScript"],
-    image: "/images/projects/solo-ui.png",
+    image: "/images/solo-ui.png",
     demo: "https://tu-demo.com",
     repo: "https://github.com/tuuser/tu-repo",
   },

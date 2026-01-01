@@ -28,8 +28,8 @@ const techColor = (t: string) => {
           </div>
 
           <div class="info">
-            <div class="name">TU NOMBRE</div>
-            <div class="meta">Edad: XX • Carrera: XXXXX</div>
+            <div class="name">Jano Lorezo Sanz</div>
+            <div class="meta">Edad: 21 | Carrera: Ing. Informatica</div>
 
             <div class="tags">
               {techs.map((t) => (
@@ -226,7 +226,7 @@ const techColor = (t: string) => {
 
     /* Markdown scrollable */
     .bioScroll{
-      max-height: 320px; /* ajustable */
+      max-height: 320px;
       overflow:auto;
       padding-right:8px;
       color:#bdbdbd;
@@ -252,12 +252,13 @@ const techColor = (t: string) => {
 	display:grid;
 	gap:12px;
 	grid-template-columns: 1fr;
+	padding-top: 1vh;
 	}
 	
 	/* PC: 2 columnas */
 	@media (min-width: 820px){
 	.gridProjects{
-		grid-template-columns: 1fr 1fr; 
+		grid-template-columns: 1fr 1fr;
 	}
 	}
 
@@ -269,7 +270,6 @@ const techColor = (t: string) => {
 	background:#0b0b0b;
 	padding:12px;
 	min-height:140px;
-
 	transition: border-color 160ms ease, transform 160ms ease, box-shadow 160ms ease;
 	}
 
