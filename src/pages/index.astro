@@ -15,6 +15,21 @@ const techColor = (t: string) => {
 
   return m[t] ?? "#7c3aed";
 };
+
+const contact = {
+  email: "janosanz04@gmail.com",
+  github: "https://github.com/JanoSanz",
+  linkedin: "https://www.linkedin.com/in/jano-sanz-875b9b2a5/",
+  cvUrl: "/CV_Jano_Lorenzo_Sanz.pdf",
+  mailTemplate:
+    "mailto:janosanz04@gmail.com?subject=" +
+    encodeURIComponent("Contacto desde tu portfolio") +
+    "&body=" +
+    encodeURIComponent(
+      "Hola Jano,\n\nVi tu portfolio y me interesó...\n\n¿Podemos coordinar?\n\nGracias!"
+    ),
+};
+
 ---
 
 <WindowLayout title="Portafolio">
@@ -38,8 +53,8 @@ const techColor = (t: string) => {
             </div>
 
             <div class="cvBtns">
-              <a class="btn" href="/cv.pdf" target="_blank">Ver CV</a>
-              <a class="btn ghost" href="/cv.pdf" download>Descargar</a>
+              <a class="btn" href={contact.cvUrl} target="_blank">Ver CV</a>
+              <a class="btn ghost" href={contact.cvUrl} download>Descargar</a>
             </div>
           </div>
         </div>
@@ -97,13 +112,71 @@ const techColor = (t: string) => {
 </section>
 
     <!-- CONTACTO (placeholder) -->
-    <section class="view" data-name="contacto">
-      <div class="panel">
-        <h2>Contacto</h2>
-        <p>Después lo armamos.</p>
+<!-- CONTACTO -->
+<section class="view" data-name="contacto">
+  <div class="panel panelContact">
+    <div class="head">
+      <h2>Contacto</h2>
+      <p>Si querés hablar por un proyecto o una oportunidad, acá están mis links.</p>
+    </div>
+
+    <div class="contactGrid">
+      <div class="card">
+        <div class="cardTitle">Email</div>
+        <div class="row">
+          <a class="mono" href={"mailto:" + contact.email}>{contact.email}</a>
+          <button class="btn sm" type="button" data-copy={contact.email}>Copiar</button>
+        </div>
+        <div class="hint">Copialo rápido o abrí tu cliente de correo.</div>
       </div>
-    </section>
+
+      <div class="card">
+        <div class="cardTitle">Redes</div>
+        <div class="links">
+          <a class="link" href={contact.github} target="_blank">GitHub</a>
+          <a class="link" href={contact.linkedin} target="_blank">LinkedIn</a>
+        </div>
+        <div class="hint">Repos y perfil profesional.</div>
+      </div>
+
+      <div class="card">
+        <div class="cardTitle">CV</div>
+        <div class="links">
+          <a class="btn sm" href={contact.cvUrl} target="_blank">Ver CV</a>
+          <a class="btn sm ghost" href={contact.cvUrl} download>Descargar</a>
+        </div>
+        <div class="hint">PDF directo (rápido de abrir).</div>
+      </div>
+
+      <div class="card wide">
+        <div class="cardTitle">Mensaje rápido</div>
+        <p class="msg">
+          Hola Jano, vi tu portfolio y me interesó <span class="mono">[proyecto]</span>. ¿Podemos coordinar?
+        </p>
+        <div class="links">
+          <a class="btn sm" href={contact.mailTemplate} target="_blank">Abrir mail con plantilla</a>
+        </div>
+      </div>
+    </div>
   </div>
+
+  <script is:inline>
+    document.addEventListener("click", async (e) => {
+      const t = e.target instanceof Element ? e.target : null;
+      const btn = t ? t.closest("[data-copy]") : null;
+      if (!btn) return;
+
+      const text = btn.getAttribute("data-copy") || "";
+      try {
+        await navigator.clipboard.writeText(text);
+        btn.textContent = "Copiado ✓";
+        setTimeout(() => (btn.textContent = "Copiar"), 1200);
+      } catch {
+        prompt("Copiá esto:", text);
+      }
+    });
+  </script>
+</section>
 
   <script>
 	type ViewName = "perfil" | "proyectos" | "contacto";
@@ -249,10 +322,10 @@ const techColor = (t: string) => {
 
 	/* mobile */
 	.gridProjects{
-	display:grid;
-	gap:12px;
-	grid-template-columns: 1fr;
-	padding-top: 1vh;
+		display:grid;
+		gap:12px;
+		grid-template-columns: 1fr;
+		padding-top: 1vh;
 	}
 	
 	/* PC: 2 columnas */
@@ -263,67 +336,67 @@ const techColor = (t: string) => {
 	}
 
 	.pCard{
-	display:flex;
-	gap:12px;
-	border:1px solid #222;
-	border-radius:14px;
-	background:#0b0b0b;
-	padding:12px;
-	min-height:140px;
-	transition: border-color 160ms ease, transform 160ms ease, box-shadow 160ms ease;
+		display:flex;
+		gap:12px;
+		border:1px solid #222;
+		border-radius:14px;
+		background:#0b0b0b;
+		padding:12px;
+		min-height:140px;
+		transition: border-color 160ms ease, transform 160ms ease, box-shadow 160ms ease;
 	}
 
 	.pCard:hover{
-	border-color:#5ee7ff;
-	box-shadow: 0 0 0 3px rgba(94,231,255,.12);
-	transform: translateY(-2px);
+		border-color:#5ee7ff;
+		box-shadow: 0 0 0 3px rgba(94,231,255,.12);
+		transform: translateY(-2px);
 	}
 
 	.pCard:hover{
-	animation: glow 900ms ease-in-out infinite alternate;
+		animation: glow 900ms ease-in-out infinite alternate;
 	}
 
 	@keyframes glow{
-	from { box-shadow: 0 0 0 3px rgba(94,231,255,.10); }
-	to   { box-shadow: 0 0 0 3px rgba(94,231,255,.22); }
+		from { box-shadow: 0 0 0 3px rgba(94,231,255,.10); }
+		to   { box-shadow: 0 0 0 3px rgba(94,231,255,.22); }
 	}
 
 
 	.pImg{
-	width:140px;
-	height:110px;
-	border-radius:12px;
-	overflow:hidden;
-	border:1px solid #2a2a2a;
-	background:#070707;
-	flex: 0 0 auto;
+		width:140px;
+		height:110px;
+		border-radius:12px;
+		overflow:hidden;
+		border:1px solid #2a2a2a;
+		background:#070707;
+		flex: 0 0 auto;
 	}
 
 	.pImg img{
-	width:100%;
-	height:100%;
-	object-fit:cover;
-	display:block;
+		width:100%;
+		height:100%;
+		object-fit:cover;
+		display:block;
 	}
 
 	.pInfo{flex:1;min-width:0}
 	.pTitle{
-	font-weight:900;
-	color:#f0f0f0;
-	margin-bottom:8px;
-	font-size:16px;
+		font-weight:900;
+		color:#f0f0f0;
+		margin-bottom:8px;
+		font-size:16px;
 	}
 
 	.pTags{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:8px}
 
 	.pDesc{
-	color:#bdbdbd;
-	line-height:1.5;
-	font-size:13px;
-	display:-webkit-box;
-	-webkit-line-clamp:3;
-	-webkit-box-orient:vertical;
-	overflow:hidden;
+		color:#bdbdbd;
+		line-height:1.5;
+		font-size:13px;
+		display:-webkit-box;
+		-webkit-line-clamp:3;
+		-webkit-box-orient:vertical;
+		overflow:hidden;
 	}
 
 	.pLinks{margin-top:10px;display:flex;gap:10px;flex-wrap:wrap}
@@ -331,35 +404,92 @@ const techColor = (t: string) => {
 
 	/* Panel Proyectos en columna */
 	.panelProjects{
-	display:flex;
-	flex-direction:column;
+		display:flex;
+		flex-direction:column;
 	}
 
 	/* Esto genera el scroll cuando hay muchas cards */
 	.projectsScroll{
-	flex:1;
-	overflow:auto;
-	padding-right:10px;
-	scrollbar-width: thin;
-	scrollbar-color: #2a2a2a transparent;
+		flex:1;
+		overflow:auto;
+		padding-right:10px;
+		scrollbar-width: thin;
+		scrollbar-color: #2a2a2a transparent;
 	}
 	.projectsScroll::-webkit-scrollbar{ width: 8px; }
 	.projectsScroll::-webkit-scrollbar-thumb{ background:#2a2a2a; border-radius:999px; }
 	.projectsScroll::-webkit-scrollbar-thumb:hover{ background:#3a3a3a; }
 
 	.panelProjects{
-	display:flex;
-	flex-direction:column;
-	height:100%;
-	min-height:0;
+		display:flex;
+		flex-direction:column;
+		height:100%;
+		min-height:0;
 	}
 
 	/* el scroll real */
 	.projectsScroll{
-	flex:1;
-	overflow:auto;
-	min-height:0;
-	padding-right:10px;
+		flex:1;
+		overflow:auto;
+		min-height:0;
+		padding-right:10px;
+	}
+	/* Contacto */
+
+	.panelContact{ height:100%; }
+
+	.contactGrid{
+		display:grid;
+		gap:12px;
+		grid-template-columns: 1fr;
+	}
+
+	@media (min-width: 820px){
+		.contactGrid{ grid-template-columns: 1fr 1fr; }
+		.wide{ grid-column: span 2; }
+	}
+
+	.card{
+		border:1px solid #222;
+		border-radius:14px;
+		background:#0b0b0b;
+		padding:14px;
+	}
+
+	.cardTitle{
+		font-weight:900;
+		letter-spacing:1px;
+		margin-bottom:10px;
+		color:#f0f0f0;
+	}
+
+	.row{ display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap; }
+	.links{ display:flex; gap:10px; flex-wrap:wrap; }
+
+	.link{
+		padding:10px 12px;
+		border-radius:10px;
+		border:1px solid #2a2a2a;
+		text-decoration:none;
+		color:#eaeaea;
+		background:#121216;
+	}
+	.link:hover{ border-color:#5ee7ff; }
+
+	.hint{ margin-top:8px; color:#9c9c9c; font-size:12px; }
+	.mono{ font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace; }
+	.msg{ color:#bdbdbd; margin:0; line-height:1.6; }
+
+	.panelContact a.mono{
+		color:#eaeaea;
+		text-decoration:none;
+	}
+	.panelContact a.mono:hover{
+		color:#5ee7ff;
+		text-decoration:underline;
+	}
+	.panelContact a.mono:visited{
+		color:#eaeaea;
 	}
 
 
