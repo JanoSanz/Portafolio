@@ -3,14 +3,30 @@ import WindowLayout from "../layouts/WindowLayout.astro";
 import ProfileMd from "../content/profile.md";
 import { projects } from "../data/projects";
 
-const techs = ["HTML", "CSS", "JavaScript", "Astro"];
+const techs = ["JavaScript", "Astro","SQL","Power BI","Excel","Git","GitHub","C"];
 
 const techColor = (t: string) => {
   const m: Record<string, string> = {
     HTML: "#ff6b6b",
     CSS: "#4dabf7",
     JavaScript: "#ffd43b",
-    Astro: "#ff5d01",
+    TypeScript: "#3178c6",
+    Astro: "#7c3aed",
+
+    "Node.js": "#22c55e",
+    Express: "#a3a3a3",
+
+    SQL: "#38bdf8",
+    MySQL: "#38bdf8",
+
+    "Power BI": "#f59e0b",
+    "PowerBI": "#f59e0b",
+    Excel: "#16a34a",
+
+    Git: "#f97316",
+    GitHub: "#e5e7eb",
+
+    C: "#93c5fd",
   };
 
   return m[t] ?? "#7c3aed";
@@ -33,7 +49,7 @@ const contact = {
 ---
 
 <WindowLayout title="Portafolio">
-  <div class="views" id="views" data-view="perfil">
+  <div class="views hudScroll" id="views" data-view="perfil">
     <!-- PERFIL -->
     <section class="view" data-name="perfil">
       <div class="panel">
@@ -64,7 +80,7 @@ const contact = {
             <div class="bioTitle">Descripción / CV</div>
           </div>
 
-          <div class="bioScroll">
+          <div class="bioScroll hudScroll">
             <ProfileMd />
           </div>
         </div>
@@ -73,45 +89,51 @@ const contact = {
 
 <!-- PROYECTOS -->
 <section class="view" data-name="proyectos">
-  <div class="panel">
+  <div class="panel panelProjects">
     <div class="head">
       <h2>Proyectos</h2>
       <p>Algunos de los proyectos que fui construyendo.</p>
     </div>
-	<div class="projectsScroll">
-		<div class="gridProjects">
-		{projects.map((p) => (
-			<article class="pCard">
-			<div class="pImg">
-				<img src={p.image} alt={p.title} loading="lazy" />
-			</div>
 
-			<div class="pInfo">
-				<div class="pTitle">{p.title}</div>
+    <div class="projectsScroll">
+      <div class="gridProjects">
+        {projects.map((p) => (
+          <article class="pCard">
+            <div class="pImg">
+              <img src={p.image} alt={p.title} loading="lazy" />
+            </div>
 
-				<div class="pTags">
-				{p.tech.map((t) => (
-					<span class="tag" style={`--c:${techColor(t)}`}>{t}</span>
-				))}
-				</div>
+            <div class="pInfo">
+              <div class="pTitle">{p.title}</div>
 
-				<div class="pDesc">{p.desc}</div>
+              <div class="pTags">
+                {p.tech.map((t) => (
+                  <span class="tag" style={`--c:${techColor(t)}`}>{t}</span>
+                ))}
+              </div>
 
-				{(p.demo || p.repo) && (
-				<div class="pLinks">
-					{p.demo && <a class="btn sm" href={p.demo} target="_blank">Demo</a>}
-					{p.repo && <a class="btn sm ghost" href={p.repo} target="_blank">Repo</a>}
-				</div>
-				)}
-			</div>
-			</article>
-		))}
-		</div>
-	</div>
+              <div class="pDesc">{p.desc}</div>
+
+              {(p.demo || p.repo) && (
+                <div class="pLinks">
+                  {p.demo && (
+                    <a class="btn sm" href={p.demo} target="_blank" rel="noreferrer">Demo</a>
+                  )}
+                  {p.repo && (
+                    <a class="btn sm ghost" href={p.repo} target="_blank" rel="noreferrer">Repo</a>
+                  )}
+                </div>
+              )}
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
   </div>
 </section>
 
-    <!-- CONTACTO (placeholder) -->
+
+
 <!-- CONTACTO -->
 <section class="view" data-name="contacto">
   <div class="panel panelContact">
@@ -154,7 +176,40 @@ const contact = {
           Hola Jano, vi tu portfolio y me interesó <span class="mono">[proyecto]</span>. ¿Podemos coordinar?
         </p>
         <div class="links">
-          <a class="btn sm" href={contact.mailTemplate} target="_blank">Abrir mail con plantilla</a>
+          <a
+            class="btn sm"
+            href={
+              `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(contact.email)}&su=${encodeURIComponent(
+                "Contacto desde tu portfolio"
+              )}&body=${encodeURIComponent(
+                "Hola Jano,\n\nVi tu portfolio y me interesó [proyecto]. ¿Podemos coordinar?\n\nGracias!"
+              )}`
+            }
+            target="_blank"
+            rel="noreferrer"
+            >
+            Enviar por Gmail
+          </a>
+          <a
+            class="btn sm ghost"
+            href={
+              `mailto:${contact.email}?subject=${encodeURIComponent("Contacto desde tu portfolio")}&body=${encodeURIComponent(
+                "Hola Jano,\n\nVi tu portfolio y me interesó [proyecto]. ¿Podemos coordinar?\n\nGracias!"
+              )}`
+            }
+            >
+            Abrir en app
+          </a>
+          <button
+            class="btn sm ghost"
+            type="button"
+            data-copy-msg="Hola Jano,\n\nVi tu portfolio y me interesó [proyecto]. ¿Podemos coordinar?\n\nGracias!"
+            >
+            Copiar mensaje
+          </button>
+        </div>
+        <div class="hint">
+          Gmail funciona siempre. “Abrir en app” depende de la configuración del dispositivo.
         </div>
       </div>
     </div>
@@ -175,6 +230,18 @@ const contact = {
         prompt("Copiá esto:", text);
       }
     });
+    const msgBtn = t ? t.closest("[data-copy-msg]") : null;
+    if (msgBtn) {
+      const text = msgBtn.getAttribute("data-copy-msg") || "";
+      try {
+        await navigator.clipboard.writeText(text);
+        msgBtn.textContent = "Copiado ✓";
+        setTimeout(() => (msgBtn.textContent = "Copiar mensaje"), 1200);
+      } catch {
+        prompt("Copiá esto:", text);
+      }
+      return;
+    }
   </script>
 </section>
 
@@ -347,8 +414,8 @@ const contact = {
 	}
 
 	.pCard:hover{
-		border-color:#5ee7ff;
-		box-shadow: 0 0 0 3px rgba(94,231,255,.12);
+		border-color:#7c3aed;
+		box-shadow: 0 0 0 3px rgba(124, 58, 237, .12);
 		transform: translateY(-2px);
 	}
 
@@ -357,8 +424,8 @@ const contact = {
 	}
 
 	@keyframes glow{
-		from { box-shadow: 0 0 0 3px rgba(94,231,255,.10); }
-		to   { box-shadow: 0 0 0 3px rgba(94,231,255,.22); }
+		from { box-shadow: 0 0 0 3px rgba(124, 58, 237, .10); }
+		to   { box-shadow: 0 0 0 3px rgba(124, 58, 237, .22); }
 	}
 
 
@@ -427,6 +494,19 @@ const contact = {
 		min-height:0;
 	}
 
+  .panelProjects{
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.projectsScroll{
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+}
+
 	/* el scroll real */
 	.projectsScroll{
 		flex:1;
@@ -474,7 +554,7 @@ const contact = {
 		color:#eaeaea;
 		background:#121216;
 	}
-	.link:hover{ border-color:#5ee7ff; }
+	.link:hover{ border-color:#7c3aed; }
 
 	.hint{ margin-top:8px; color:#9c9c9c; font-size:12px; }
 	.mono{ font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace; }
@@ -485,13 +565,39 @@ const contact = {
 		text-decoration:none;
 	}
 	.panelContact a.mono:hover{
-		color:#5ee7ff;
+		color:#7c3aed;
 		text-decoration:underline;
 	}
 	.panelContact a.mono:visited{
 		color:#eaeaea;
 	}
 
+.hudScroll{
+  overflow: auto;
+  padding-right: 10px;
+
+  scrollbar-width: thin;
+  scrollbar-color: rgba(53, 45, 66, 0.55) transparent;
+}
+
+.hudScroll::-webkit-scrollbar{
+  width: 10px;
+}
+
+.hudScroll::-webkit-scrollbar-track{
+  background: transparent;
+}
+
+.hudScroll::-webkit-scrollbar-thumb{
+  background: rgba(124, 58, 237, .35);
+  border: 1px solid rgba(124, 58, 237, .55);
+  border-radius: 999px;
+}
+
+.hudScroll::-webkit-scrollbar-thumb:hover{
+  background: rgba(124, 58, 237, .55);
+  box-shadow: 0 0 0 3px rgba(124, 58, 237, .12);
+}
 
 	</style>
 </WindowLayout>
