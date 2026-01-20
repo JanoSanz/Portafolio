@@ -18,8 +18,8 @@ export type Project = {
 */
 export const projects: Project[] = [
   {
-    title: "Solo UI System",
-    desc: "UI estilo RPG con cards, stats y animaciones suaves.",
+    title: "Portafilio",
+    desc: "Un portafolio donde expongo mis conocimientos y mis proyectos",
     tech: ["HTML", "CSS", "JavaScript", "Astro"],
     image: "/imgproyect/portafolio.png",
     demo: "https://janosanz-portafolio.vercel.app",
