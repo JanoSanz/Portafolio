@@ -13,8 +13,8 @@ export const projects: Project[] = [
     desc: "UI estilo RPG con cards, stats y animaciones suaves.",
     tech: ["HTML", "CSS", "JavaScript"],
     image: "/images/solo-ui.png",
-    demo: "https://tu-demo.com",
-    repo: "https://github.com/tuuser/tu-repo",
+    demo: "https://janosanz-portafolio.vercel.app",
+    repo: "https://github.com/JanoSanz/Portafolio",
   },
   {
     title: "App Notas",
