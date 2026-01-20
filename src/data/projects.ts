@@ -6,76 +6,23 @@ export type Project = {
   demo?: string;
   repo?: string;
 };
-
+/*
+    {
+    title: "",
+    desc: "",
+    tech: ["", "",],
+    image: "",
+    demo: "",
+    repo: "",
+  },
+*/
 export const projects: Project[] = [
   {
     title: "Solo UI System",
     desc: "UI estilo RPG con cards, stats y animaciones suaves.",
     tech: ["HTML", "CSS", "JavaScript"],
-    image: "/images/solo-ui.png",
+    image: "/imgproyect/portafolio.png",
     demo: "https://janosanz-portafolio.vercel.app",
     repo: "https://github.com/JanoSanz/Portafolio",
-  },
-  {
-    title: "App Notas",
-    desc: "Notas con LocalStorage, búsqueda y etiquetas.",
-    tech: ["JavaScript", "Astro"],
-    image: "/images/projects/notas.png",
-  },
-    {
-    title: "Solo UI System",
-    desc: "UI estilo RPG con cards, stats y animaciones suaves.",
-    tech: ["HTML", "CSS", "JavaScript"],
-    image: "/images/projects/solo-ui.png",
-    demo: "https://tu-demo.com",
-    repo: "https://github.com/tuuser/tu-repo",
-  },
-    {
-    title: "Solo UI System",
-    desc: "UI estilo RPG con cards, stats y animaciones suaves.",
-    tech: ["HTML", "CSS", "JavaScript"],
-    image: "/images/projects/solo-ui.png",
-    demo: "https://tu-demo.com",
-    repo: "https://github.com/tuuser/tu-repo",
-  },
-    {
-    title: "Solo UI System",
-    desc: "UI estilo RPG con cards, stats y animaciones suaves.",
-    tech: ["HTML", "CSS", "JavaScript"],
-    image: "/images/projects/solo-ui.png",
-    demo: "https://tu-demo.com",
-    repo: "https://github.com/tuuser/tu-repo",
-  },
-    {
-    title: "Solo UI System",
-    desc: "UI estilo RPG con cards, stats y animaciones suaves.",
-    tech: ["HTML", "CSS", "JavaScript"],
-    image: "/images/projects/solo-ui.png",
-    demo: "https://tu-demo.com",
-    repo: "https://github.com/tuuser/tu-repo",
-  },
-    {
-    title: "Solo UI System",
-    desc: "UI estilo RPG con cards, stats y animaciones suaves.",
-    tech: ["HTML", "CSS", "JavaScript"],
-    image: "/images/projects/solo-ui.png",
-    demo: "https://tu-demo.com",
-    repo: "https://github.com/tuuser/tu-repo",
-  },
-    {
-    title: "Solo UI System",
-    desc: "UI estilo RPG con cards, stats y animaciones suaves.",
-    tech: ["HTML", "CSS", "JavaScript"],
-    image: "/images/projects/solo-ui.png",
-    demo: "https://tu-demo.com",
-    repo: "https://github.com/tuuser/tu-repo",
-  },
-    {
-    title: "Solo UI System",
-    desc: "UI estilo RPG con cards, stats y animaciones suaves.",
-    tech: ["HTML", "CSS", "JavaScript"],
-    image: "/images/projects/solo-ui.png",
-    demo: "https://tu-demo.com",
-    repo: "https://github.com/tuuser/tu-repo",
   },
 ];
