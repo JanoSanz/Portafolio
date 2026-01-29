@@ -133,8 +133,8 @@ const contact = {
 </section>
 
 
-
 <!-- CONTACTO -->
+
 <section class="view" data-name="contacto">
   <div class="panel panelContact">
     <div class="head">
@@ -142,74 +142,80 @@ const contact = {
       <p>Si querés hablar por un proyecto o una oportunidad, acá están mis links.</p>
     </div>
 
-    <div class="contactGrid">
-      <div class="card">
-        <div class="cardTitle">Email</div>
-        <div class="row">
-          <a class="mono" href={"mailto:" + contact.email}>{contact.email}</a>
-          <button class="btn sm" type="button" data-copy={contact.email}>Copiar</button>
+    <div class="contactScroll hudScroll">
+      <div class="contactGrid">
+        <div class="card">
+          <div class="cardTitle">Email</div>
+          <div class="row">
+            <a class="mono" href={"mailto:" + contact.email}>{contact.email}</a>
+            <button class="btn sm" type="button" data-copy={contact.email}>Copiar</button>
+          </div>
+          <div class="hint">Copialo rápido o abrí tu cliente de correo.</div>
         </div>
-        <div class="hint">Copialo rápido o abrí tu cliente de correo.</div>
-      </div>
 
-      <div class="card">
-        <div class="cardTitle">Redes</div>
-        <div class="links">
-          <a class="link" href={contact.github} target="_blank">GitHub</a>
-          <a class="link" href={contact.linkedin} target="_blank">LinkedIn</a>
+        <div class="card">
+          <div class="cardTitle">Redes</div>
+          <div class="links">
+            <a class="link" href={contact.github} target="_blank" rel="noreferrer">GitHub</a>
+            <a class="link" href={contact.linkedin} target="_blank" rel="noreferrer">LinkedIn</a>
+          </div>
+          <div class="hint">Repos y perfil profesional.</div>
         </div>
-        <div class="hint">Repos y perfil profesional.</div>
-      </div>
 
-      <div class="card">
-        <div class="cardTitle">CV</div>
-        <div class="links">
-          <a class="btn sm" href={contact.cvUrl} target="_blank">Ver CV</a>
-          <a class="btn sm ghost" href={contact.cvUrl} download>Descargar</a>
+        <div class="card">
+          <div class="cardTitle">CV</div>
+          <div class="links">
+            <a class="btn sm" href={contact.cvUrl} target="_blank" rel="noreferrer">Ver CV</a>
+            <a class="btn sm ghost" href={contact.cvUrl} download>Descargar</a>
+          </div>
+          <div class="hint">PDF directo (rápido de abrir).</div>
         </div>
-        <div class="hint">PDF directo (rápido de abrir).</div>
-      </div>
 
-      <div class="card wide">
-        <div class="cardTitle">Mensaje rápido</div>
-        <p class="msg">
-          Hola Jano, vi tu portfolio y me interesó <span class="mono">[proyecto]</span>. ¿Podemos coordinar?
-        </p>
-        <div class="links">
-          <a
-            class="btn sm"
-            href={
-              `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(contact.email)}&su=${encodeURIComponent(
-                "Contacto desde tu portfolio"
-              )}&body=${encodeURIComponent(
-                "Hola Jano,\n\nVi tu portfolio y me interesó [proyecto]. ¿Podemos coordinar?\n\nGracias!"
-              )}`
-            }
-            target="_blank"
-            rel="noreferrer"
+        <div class="card wide">
+          <div class="cardTitle">Mensaje rápido</div>
+          <p class="msg">
+            Hola Jano, vi tu portfolio y me interesó <span class="mono">[proyecto]</span>. ¿Podemos coordinar?
+          </p>
+
+          <div class="links">
+            <a
+              class="btn sm"
+              href={
+                `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(contact.email)}&su=${encodeURIComponent(
+                  "Contacto desde tu portfolio"
+                )}&body=${encodeURIComponent(
+                  "Hola Jano,\\n\\nVi tu portfolio y me interesó [proyecto]. ¿Podemos coordinar?\\n\\nGracias!"
+                )}`
+              }
+              target="_blank"
+              rel="noreferrer"
             >
-            Enviar por Gmail
-          </a>
-          <a
-            class="btn sm ghost"
-            href={
-              `mailto:${contact.email}?subject=${encodeURIComponent("Contacto desde tu portfolio")}&body=${encodeURIComponent(
-                "Hola Jano,\n\nVi tu portfolio y me interesó [proyecto]. ¿Podemos coordinar?\n\nGracias!"
-              )}`
-            }
+              Enviar por Gmail
+            </a>
+
+            <a
+              class="btn sm ghost"
+              href={
+                `mailto:${contact.email}?subject=${encodeURIComponent("Contacto desde tu portfolio")}&body=${encodeURIComponent(
+                  "Hola Jano,\\n\\nVi tu portfolio y me interesó [proyecto]. ¿Podemos coordinar?\\n\\nGracias!"
+                )}`
+              }
             >
-            Abrir en app
-          </a>
-          <button
-            class="btn sm ghost"
-            type="button"
-            data-copy-msg="Hola Jano,\n\nVi tu portfolio y me interesó [proyecto]. ¿Podemos coordinar?\n\nGracias!"
+              Abrir en app
+            </a>
+
+            <button
+              class="btn sm ghost"
+              type="button"
+              data-copy-msg="Hola Jano, vi tu portfolio y me interesó [proyecto]. ¿Podemos coordinar?"
             >
-            Copiar mensaje
-          </button>
-        </div>
-        <div class="hint">
-          Gmail funciona siempre. “Abrir en app” depende de la configuración del dispositivo.
+              Copiar mensaje
+            </button>
+          </div>
+
+          <div class="hint">
+            Gmail funciona siempre. “Abrir en app” depende de la configuración del dispositivo.
+          </div>
         </div>
       </div>
     </div>
@@ -218,30 +224,32 @@ const contact = {
   <script is:inline>
     document.addEventListener("click", async (e) => {
       const t = e.target instanceof Element ? e.target : null;
-      const btn = t ? t.closest("[data-copy]") : null;
-      if (!btn) return;
 
-      const text = btn.getAttribute("data-copy") || "";
-      try {
-        await navigator.clipboard.writeText(text);
-        btn.textContent = "Copiado ✓";
-        setTimeout(() => (btn.textContent = "Copiar"), 1200);
-      } catch {
-        prompt("Copiá esto:", text);
+      const btnEmail = t ? t.closest("[data-copy]") : null;
+      if (btnEmail) {
+        const text = btnEmail.getAttribute("data-copy") || "";
+        try {
+          await navigator.clipboard.writeText(text);
+          btnEmail.textContent = "Copiado ✓";
+          setTimeout(() => (btnEmail.textContent = "Copiar"), 1200);
+        } catch {
+          prompt("Copiá esto:", text);
+        }
+        return;
+      }
+
+      const btnMsg = t ? t.closest("[data-copy-msg]") : null;
+      if (btnMsg) {
+        const text = btnMsg.getAttribute("data-copy-msg") || "";
+        try {
+          await navigator.clipboard.writeText(text);
+          btnMsg.textContent = "Copiado ✓";
+          setTimeout(() => (btnMsg.textContent = "Copiar mensaje"), 1200);
+        } catch {
+          prompt("Copiá esto:", text);
+        }
       }
     });
-    const msgBtn = t ? t.closest("[data-copy-msg]") : null;
-    if (msgBtn) {
-      const text = msgBtn.getAttribute("data-copy-msg") || "";
-      try {
-        await navigator.clipboard.writeText(text);
-        msgBtn.textContent = "Copiado ✓";
-        setTimeout(() => (msgBtn.textContent = "Copiar mensaje"), 1200);
-      } catch {
-        prompt("Copiá esto:", text);
-      }
-      return;
-    }
   </script>
 </section>
 
@@ -561,9 +569,6 @@ const contact = {
 		padding-right:10px;
 	}
 	/* Contacto */
-
-	.panelContact{ height:100%; }
-
 	.contactGrid{
 		display:grid;
 		gap:12px;
@@ -643,6 +648,20 @@ const contact = {
 .hudScroll::-webkit-scrollbar-thumb:hover{
   background: rgba(124, 58, 237, .55);
   box-shadow: 0 0 0 3px rgba(124, 58, 237, .12);
+}
+
+.panelContact{
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.contactScroll{
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  padding-right: 10px;
 }
 
 @media (max-width: 520px){
