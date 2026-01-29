@@ -312,6 +312,7 @@ const contact = {
       border:1px solid #222;
       border-radius:12px;
       background:#0b0b0b;
+      align-items:flex-start;
     }
 
     .avatar{
@@ -363,6 +364,51 @@ const contact = {
       text-transform:uppercase;
       margin-bottom:10px;
     }
+
+  @media (max-width: 520px){
+  .top{
+    flex-direction:column;
+    gap:12px;
+  }
+
+  .avatar{
+    width:100%;
+    height:140px;
+  }
+
+  .avatar img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    border-radius:14px;
+  }
+
+  .info{
+    width:100%;
+  }
+
+  .meta{
+    font-size:14px;
+    line-height:1.35;
+  }
+
+  .tags{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+  }
+
+  .cvBtns{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+  }
+
+  .cvBtns .btn{
+    width:100%;
+    text-align:center;
+  }
+}
 
     /* Markdown scrollable */
     .bioScroll{
