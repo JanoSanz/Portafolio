@@ -645,5 +645,48 @@ const contact = {
   box-shadow: 0 0 0 3px rgba(124, 58, 237, .12);
 }
 
+@media (max-width: 520px){
+  .panelContact{
+    padding: 12px;
+  }
+
+  .contactGrid{
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .card{
+    padding: 14px;
+  }
+
+  .row{
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .row .btn.sm{
+    width: 100%;
+    text-align:center;
+  }
+
+  .links{
+    display:flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .links .link,
+  .links .btn.sm{
+    width: 100%;
+    text-align:center;
+  }
+
+  .msg{
+    font-size: 14px;
+    line-height: 1.55;
+  }
+}
+
 	</style>
 </WindowLayout>
