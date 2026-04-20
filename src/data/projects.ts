@@ -25,4 +25,11 @@ export const projects: Project[] = [
     demo: "https://janosanz-portafolio.vercel.app",
     repo: "https://github.com/JanoSanz/Portafolio",
   },
+  {
+    title: "Buscador de Peliculas",
+    desc: "CineCerca resuelve una pregunta concreta: ""¿donde puedo ver esta pelicula hoy?"". El usuario busca un titulo, ve el detalle de la pelicula (sinopsis, rating, duracion) y obtiene el listado de cines de su zona donde se proyecta, con sus horarios, formato (2D / 3D / IMAX) e idioma (subtitulada o doblada).",
+    tech: ["HTML", "CSS", "JavaScript", "Astro", "API"],
+    image: "/imgproyect/Cine.png",
+    repo: "https://github.com/JanoSanz/CINE",
+  },
 ];
