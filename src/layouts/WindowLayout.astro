@@ -9,6 +9,12 @@ const { title = "Portafolio Jano L. Sanz" } = Astro.props;
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="icon" type="image/png" href="/usuario.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800&family=Rajdhani:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
     <title>{title}</title>
   </head>
 
@@ -25,162 +31,171 @@ const { title = "Portafolio Jano L. Sanz" } = Astro.props;
 </html>
 
 <style>
+  :global(*, *::before, *::after){ box-sizing: border-box; }
 
-    :global(*, *::before, *::after){
-        box-sizing: border-box;
+  :global(:root){
+    /* Paleta principal: violeta moderno + grafito serio */
+    --sys-violet: #a78bfa;
+    --sys-violet-bright: #ddd6fe;
+    --sys-violet-deep: #6d28d9;
+
+    /* Fondos / superficies (negro azulado-grafito) */
+    --sys-bg: #04030a;
+    --sys-graphite: #14111e;
+    --sys-panel: #0f0c1a;
+
+    /* Bordes */
+    --sys-border: rgba(167, 139, 250, .22);
+    --sys-border-strong: rgba(167, 139, 250, .55);
+
+    /* Texto: blanco con leve tinte violeta + grises neutros para seriedad */
+    --sys-text: #f1ecff;
+    --sys-text-dim: #a8a3c0;
+    --sys-text-mute: #948fb5;
+
+    --sys-glow: rgba(167, 139, 250, .38);
+
+    --sys-font: "Rajdhani", system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+    --sys-font-title: "Orbitron", "Rajdhani", system-ui, sans-serif;
+  }
+
+  :global(body){
+    margin:0;
+    background:
+      radial-gradient(1200px 700px at 30% 10%, #1a1230 0%, #0a0613 55%, #04020a 100%);
+    color: var(--sys-text);
+    font-family: var(--sys-font);
+    overflow: hidden;
+    position: relative;
+    min-height: 100vh;
+  }
+
+  /* Halos de fondo */
+  :global(body)::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    z-index:0;
+    background:
+      radial-gradient(900px 600px at 18% 18%, rgba(167,139,250,.14), transparent 60%),
+      radial-gradient(800px 500px at 82% 82%, rgba(167,139,250,.08), transparent 60%);
+  }
+
+  /* Scanlines holográficas */
+  :global(body)::after{
+    content:"";
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    z-index:0;
+    opacity:.07;
+    background:
+      repeating-linear-gradient(
+        180deg,
+        rgba(167,139,250,.55) 0,
+        rgba(167,139,250,.55) 1px,
+        transparent 1px,
+        transparent 3px
+      );
+    mix-blend-mode: screen;
+  }
+
+  .wrap{
+    min-height:100vh;
+    display:grid;
+    place-items:center;
+    padding:24px;
+    position:relative;
+    z-index:1;
+  }
+
+  .window{
+    width: min(1120px, 100%);
+    height: min(740px, calc(100vh - 48px));
+    border: 1px solid var(--sys-border-strong);
+    background:
+      linear-gradient(180deg, rgba(22,17,38,.92), rgba(10,7,18,.96));
+    box-shadow:
+      0 0 0 1px rgba(167,139,250,.12),
+      0 0 38px rgba(167,139,250,.20),
+      0 22px 80px rgba(0,0,0,.75),
+      inset 0 0 60px rgba(167,139,250,.06);
+    clip-path: polygon(
+      18px 0,
+      100% 0,
+      100% calc(100% - 18px),
+      calc(100% - 18px) 100%,
+      0 100%,
+      0 18px
+    );
+    animation: systemOpen 620ms cubic-bezier(.2,.85,.2,1) both;
+    transform-origin: center;
+    position: relative;
+  }
+
+  /* Brackets brillantes en esquinas */
+  .window::before,
+  .window::after{
+    content:"";
+    position:absolute;
+    width:22px;
+    height:22px;
+    border: 1.5px solid var(--sys-violet-bright);
+    pointer-events:none;
+    z-index:5;
+    filter: drop-shadow(0 0 4px var(--sys-glow));
+  }
+  .window::before{
+    top:0; left:0;
+    border-right:none;
+    border-bottom:none;
+  }
+  .window::after{
+    bottom:0; right:0;
+    border-left:none;
+    border-top:none;
+  }
+
+  .content{
+    height: calc(100% - 56px);
+    padding: 16px;
+    display:flex;
+    flex-direction:column;
+    min-height:0;
+    overflow: hidden;
+    position: relative;
+  }
+
+  @keyframes systemOpen{
+    0%{
+      opacity:0;
+      transform: scale(.94);
+      filter: blur(10px) brightness(2.4);
     }
-    :global(body){
-        margin:0;
-        background: radial-gradient(1200px 700px at 30% 10%, #121225 0%, #050507 55%, #020203 100%);
-        color:#eaeaea;
-        font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-        overflow: hidden;
+    55%{
+      opacity:1;
+      filter: blur(0) brightness(1.6);
     }
-
-    .wrap{
-        min-height:100vh;
-        display:grid;
-        place-items:center;
-        padding:24px;
-    }
-
-    .window{
-        width:min(1120px, 100%);
-        height:min(740px, calc(100vh - 48px));
-        border:1px solid #2a2a2a;
-        border-radius:16px;
-        overflow:hidden;
-        background: linear-gradient(180deg, #0e0e12, #07070a);
-        box-shadow: 0 18px 60px rgba(0,0,0,.55);
-
-        /* Animación de entrada: abre del centro hacia afuera */
-        animation: openFromCenter 520ms cubic-bezier(.2,.85,.2,1) both;
-        transform-origin: center;
-    }
-
-  @media (max-width: 520px){
-    .wrap{
-      padding: 10px;
-    }
-
-    .window{
-      width: 100%;
-      height: calc(100vh - 20px);
-      border-radius: 16px;
+    100%{
+      opacity:1;
+      transform: scale(1);
+      filter: blur(0) brightness(1);
     }
   }
 
-    .content{
-        height: calc(100% - 56px);
-        padding:16px;
-        display:flex;
-        flex-direction:column;
-        min-height:0;
-        overflow: hidden;
+  @media (prefers-reduced-motion: reduce){
+    .window{ animation: none; }
+  }
+
+  @media (max-width: 520px){
+    .wrap{ padding: 8px; }
+    .window{
+      width: 100%;
+      height: calc(100vh - 16px);
+      clip-path: polygon(14px 0, 100% 0, 100% calc(100% - 14px), calc(100% - 14px) 100%, 0 100%, 0 14px);
     }
-    
-    @keyframes openFromCenter{
-        0%{
-        opacity:0;
-        transform: scale(.92);
-        clip-path: inset(45% 45% 45% 45% round 16px);
-        filter: blur(6px);
-        }
-        100%{
-        opacity:1;
-        transform: scale(1);
-        clip-path: inset(0 0 0 0 round 16px);
-        filter: blur(0);
-        }
-    }
-
-    @media (prefers-reduced-motion: reduce){
-        .window{ animation:none; }
-    }
-    :global(body){
-  margin:0;
-  overflow:hidden;
-  position:relative;
-}
-
-/* Glow suave */
-:global(body)::before{
-  content:"";
-  position:fixed;
-  inset:0;
-  pointer-events:none;
-  z-index:0;
-
-  background:
-    radial-gradient(900px 600px at 20% 15%, rgba(124,58,237,.22), transparent 60%),
-    radial-gradient(900px 600px at 75% 30%, rgba(124,58,237,.14), transparent 62%),
-    radial-gradient(700px 520px at 50% 85%, rgba(124,58,237,.10), transparent 60%),
-    linear-gradient(180deg, #06060a, #020205);
-
-  animation: hudGlow 10s ease-in-out infinite alternate;
-}
-
-:global(body)::after{
-  content:"";
-  position:fixed;
-  inset:0;
-  pointer-events:none;
-  z-index:0;
-  opacity:.22;
-  mix-blend-mode: screen;
-
-  background:
-    linear-gradient(to right, rgba(124,58,237,.10) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(124,58,237,.08) 1px, transparent 1px),
-
-    radial-gradient(circle at 10% 20%, rgba(124,58,237,.55) 1px, transparent 1.2px),
-    radial-gradient(circle at 30% 80%, rgba(124,58,237,.45) 1px, transparent 1.2px),
-    radial-gradient(circle at 70% 30%, rgba(124,58,237,.50) 1px, transparent 1.2px),
-    radial-gradient(circle at 85% 70%, rgba(124,58,237,.40) 1px, transparent 1.2px),
-
-    radial-gradient(circle at 15% 60%, rgba(124,58,237,.25) 1px, transparent 1.2px),
-    radial-gradient(circle at 55% 15%, rgba(124,58,237,.22) 1px, transparent 1.2px),
-    radial-gradient(circle at 60% 85%, rgba(124,58,237,.20) 1px, transparent 1.2px),
-    radial-gradient(circle at 92% 40%, rgba(124,58,237,.18) 1px, transparent 1.2px);
-
-  background-size:
-    64px 64px,
-    64px 64px,
-
-    320px 320px,
-    360px 360px,
-    420px 420px,
-    480px 480px,
-
-    560px 560px,
-    620px 620px,
-    700px 700px,
-    760px 760px;
-
-  animation: hudGrid 14s linear infinite, hudParticles 18s linear infinite;
-}
-
-.window{ position:relative; z-index:1; }
-
-@keyframes hudGlow{
-  0%   { filter: hue-rotate(0deg); transform: scale(1); }
-  100% { filter: hue-rotate(6deg); transform: scale(1.02); }
-}
-
-@keyframes hudGrid{
-  from { background-position: 0 0, 0 0, 0 0,0 0,0 0,0 0, 0 0,0 0,0 0,0 0; }
-  to   { background-position: 64px 32px, 32px 64px, 0 0,0 0,0 0,0 0, 0 0,0 0,0 0,0 0; }
-}
-
-@keyframes hudParticles{
-  from { background-position: 0 0,0 0, 0 0,0 0,0 0,0 0, 0 0,0 0,0 0,0 0; }
-  to   { background-position: 0 0,0 0, 160px 240px, -180px 220px, 210px -180px, -260px -210px,
-                       300px 160px, -320px 180px, 260px -280px, -240px -260px; }
-}
-
-@media (prefers-reduced-motion: reduce){
-  :global(body)::before,
-  :global(body)::after{ animation:none; }
-}
-
+    .window::before, .window::after{ width: 16px; height: 16px; }
+    .content{ padding: 12px; }
+  }
 </style>
