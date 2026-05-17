@@ -5,7 +5,7 @@ Estudiante de Ingeniería Informática (UNLaM, en curso). Formación práctica e
 - **Objetivo:** Full‑Stack Jr / Data Jr  
 - **Universidad:** UNLaM  
 - **Ubicación:** Buenos Aires, Argentina  
-- **Contacto:** Janosanz04@gmail.com · github.com/JanoSanz · linkedin.com/in/jano-sanz-875b9b2a5/
+- **Contacto:** janosanz04@gmail.com · github.com/JanoSanz · linkedin.com/in/jano-sanz-875b9b2a5/
 
 ## Experiencia / Proyectos
 - **Mini SPA con Astro + JS:** consumo de API pública con `fetch`, manejo de loading/errores y paginación; **UI responsive**; deploy (Netlify/Vercel).
