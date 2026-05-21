@@ -1,5 +1,5 @@
 export type ProjectRank = "S" | "A" | "B" | "C" | "D" | "E";
-export type ProjectStatus = "COMPLETED" | "IN PROGRESS" | "LOCKED" | "AVAILABLE";
+export type ProjectStatus = "COMPLETADO" | "EN PROCESO" | "BLOQUEADO" | "DISPONIBLE";
 
 export type Project = {
   title: string;
@@ -21,7 +21,7 @@ export const projects: Project[] = [
     demo: "https://janosanz-portafolio.vercel.app",
     repo: "https://github.com/JanoSanz/Portafolio",
     rank: "B",
-    status: "IN PROGRESS",
+    status: "EN PROCESO",
   },
   {
     title: "Buscador de Películas",
@@ -30,6 +30,6 @@ export const projects: Project[] = [
     image: "/imgproyect/Cine.png",
     repo: "https://github.com/JanoSanz/CINE",
     rank: "C",
-    status: "COMPLETED",
+    status: "COMPLETADO",
   },
 ];

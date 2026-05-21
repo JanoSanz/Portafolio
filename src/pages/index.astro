@@ -41,19 +41,19 @@ const rankColor = (r?: string) => {
 
 const skillTree = [
   {
-    group: "CORE",
+    group: "PRINCIPAL",
     items: [
-      { name: "Web Frontend", rank: 3, label: "Intermediate" },
-      { name: "Data / BI",    rank: 2, label: "Learning" },
-      { name: "SQL",          rank: 3, label: "Intermediate" },
+      { name: "Frontend Web", rank: 3, label: "Intermedio" },
+      { name: "Datos / BI",   rank: 2, label: "Aprendiendo" },
+      { name: "SQL",          rank: 3, label: "Intermedio" },
     ],
   },
   {
-    group: "TOOLS",
+    group: "HERRAMIENTAS",
     items: [
-      { name: "Git / GitHub", rank: 2, label: "Functional" },
-      { name: "Power BI",     rank: 3, label: "Intermediate" },
-      { name: "Astro",        rank: 3, label: "Intermediate" },
+      { name: "Git / GitHub", rank: 2, label: "Funcional" },
+      { name: "Power BI",     rank: 3, label: "Intermedio" },
+      { name: "Astro",        rank: 3, label: "Intermedio" },
     ],
   },
 ];
@@ -74,10 +74,10 @@ const contact = {
       <div class="panel">
         <header class="sysHeader">
           <span class="sysBracket">[</span>
-          <span class="sysTitle">STATUS</span>
+          <span class="sysTitle">PERFIL</span>
           <span class="sysBracket">]</span>
           <span class="sysLine"></span>
-          <span class="sysHint">PLAYER&nbsp;INFO</span>
+          <span class="sysHint">INFO&nbsp;PERSONAL</span>
         </header>
 
         <div class="statusScroll hudScroll">
@@ -90,34 +90,34 @@ const contact = {
               </div>
 
               <div class="idMeta">
-                <div class="idLabel">NAME</div>
+                <div class="idLabel">NOMBRE</div>
                 <div class="idValue idValueLg">Jano Lorenzo Sanz</div>
 
-                <div class="idLabel">TITLE</div>
-                <div class="idValue">Informatics Engineering Student</div>
+                <div class="idLabel">TÍTULO</div>
+                <div class="idValue">Estudiante de Ing. Informática</div>
 
                 <div class="rowSplit">
                   <div>
-                    <div class="idLabel">LEVEL</div>
+                    <div class="idLabel">EDAD</div>
                     <div class="idValue">21</div>
                   </div>
                   <div>
-                    <div class="idLabel">CLASS</div>
-                    <div class="idValue">Frontend / Data</div>
+                    <div class="idLabel">CLASE</div>
+                    <div class="idValue">Frontend / Datos</div>
                   </div>
                   <div>
-                    <div class="idLabel">SENIORITY</div>
-                    <div class="rankBadge">JR&nbsp;DEVELOPER</div>
+                    <div class="idLabel">ROL</div>
+                    <div class="rankBadge">DEV&nbsp;JUNIOR</div>
                   </div>
                 </div>
 
-                <div class="idLabel">LOCATION</div>
+                <div class="idLabel">UBICACIÓN</div>
                 <div class="idValue">Buenos Aires, AR · UNLaM</div>
               </div>
             </div>
 
             <div class="card abilCard">
-              <div class="cardLabel">[ SKILL TREE ]</div>
+              <div class="cardLabel">[ HABILIDADES ]</div>
               {skillTree.map((g) => (
                 <div class="skillGroup">
                   <div class="skillGroupLabel">[ {g.group} ]</div>
@@ -139,7 +139,7 @@ const contact = {
             </div>
 
             <div class="card skillCard">
-              <div class="cardLabel">[ SKILLS ]</div>
+              <div class="cardLabel">[ STACK ]</div>
               <div class="tags">
                 {techs.map((t) => (
                   <span class="tag" style={`--c:${techColor(t)}`}>{t}</span>
@@ -148,21 +148,21 @@ const contact = {
             </div>
 
             <div class="card actionCard">
-              <div class="cardLabel">[ ACTIONS ]</div>
+              <div class="cardLabel">[ ACCIONES ]</div>
               <div class="actions">
                 <a class="btn primary" href={contact.cvUrl} target="_blank" rel="noreferrer" data-view-cv>
-                  <span>View CV</span>
+                  <span>Ver CV</span>
                   <span class="btnHint">.pdf</span>
                 </a>
                 <a class="btn" href={contact.cvUrl} download>
-                  <span>Download</span>
+                  <span>Descargar</span>
                   <span class="btnHint">↓</span>
                 </a>
               </div>
             </div>
 
             <div class="card bioCard">
-              <div class="cardLabel">[ BIOGRAPHY ]</div>
+              <div class="cardLabel">[ BIOGRAFÍA ]</div>
               <div class="bio">
                 <ProfileMd />
               </div>
@@ -178,18 +178,24 @@ const contact = {
       <div class="panel">
         <header class="sysHeader">
           <span class="sysBracket">[</span>
-          <span class="sysTitle">PROJECT&nbsp;LOG</span>
+          <span class="sysTitle">REGISTRO&nbsp;DE&nbsp;PROYECTOS</span>
           <span class="sysBracket">]</span>
           <span class="sysLine"></span>
-          <span class="sysHint">{projects.length}&nbsp;PROJECTS&nbsp;LISTED</span>
+          <span class="sysHint">{projects.length}&nbsp;PROYECTOS</span>
         </header>
 
         <p class="sysSubline">&gt; Proyectos personales en curso y entregados. Cada entrada incluye stack, descripción y links.</p>
 
         <div class="projectsScroll hudScroll">
           <div class="gridProjects">
-            {projects.map((p) => (
-              <article class="pCard">
+            {projects.map((p, i) => (
+              <article
+                class="pCard"
+                data-quest-open={i.toString()}
+                role="button"
+                tabindex="0"
+                aria-label={`Ver detalles de ${p.title}`}
+              >
                 <div class="pImg">
                   <img src={p.image} alt={p.title} loading="lazy" />
                   <span class="rankBadgeAbs" style={`--rc:${rankColor(p.rank)}`}>
@@ -201,8 +207,8 @@ const contact = {
                 <div class="pInfo">
                   <div class="pHead">
                     <h3 class="pTitle">{p.title}</h3>
-                    <span class:list={["pStatus", p.status === "COMPLETED" ? "ok" : "pend"]}>
-                      {p.status ?? "AVAILABLE"}
+                    <span class:list={["pStatus", p.status === "COMPLETADO" ? "ok" : "pend"]}>
+                      {p.status ?? "DISPONIBLE"}
                     </span>
                   </div>
 
@@ -237,10 +243,10 @@ const contact = {
       <div class="panel">
         <header class="sysHeader">
           <span class="sysBracket">[</span>
-          <span class="sysTitle">COMMUNICATION</span>
+          <span class="sysTitle">COMUNICACIÓN</span>
           <span class="sysBracket">]</span>
           <span class="sysLine"></span>
-          <span class="sysHint">CHANNELS&nbsp;OPEN</span>
+          <span class="sysHint">CANALES&nbsp;ABIERTOS</span>
         </header>
 
         <p class="sysSubline">&gt; Líneas directas con el Hunter. Elegí el canal que prefieras.</p>
@@ -249,16 +255,16 @@ const contact = {
           <div class="contactGrid">
 
             <div class="card">
-              <div class="cardLabel">[ EMAIL CHANNEL ]</div>
+              <div class="cardLabel">[ CANAL DE EMAIL ]</div>
               <div class="row">
                 <a class="mono" href={"mailto:" + contact.email}>{contact.email}</a>
-                <button class="btn sm" type="button" data-copy={contact.email}>Copy</button>
+                <button class="btn sm" type="button" data-copy={contact.email}>Copiar</button>
               </div>
               <div class="hint">Copialo rápido o abrí tu cliente de correo.</div>
             </div>
 
             <div class="card">
-              <div class="cardLabel">[ NETWORK NODES ]</div>
+              <div class="cardLabel">[ REDES ]</div>
               <div class="links">
                 <a class="link" href={contact.github} target="_blank" rel="noreferrer">GitHub</a>
                 <a class="link" href={contact.linkedin} target="_blank" rel="noreferrer">LinkedIn</a>
@@ -267,16 +273,16 @@ const contact = {
             </div>
 
             <div class="card">
-              <div class="cardLabel">[ DOSSIER · CV ]</div>
+              <div class="cardLabel">[ EXPEDIENTE · CV ]</div>
               <div class="links">
-                <a class="btn sm primary" href={contact.cvUrl} target="_blank" rel="noreferrer" data-view-cv>View CV</a>
-                <a class="btn sm" href={contact.cvUrl} download>Download</a>
+                <a class="btn sm primary" href={contact.cvUrl} target="_blank" rel="noreferrer" data-view-cv>Ver CV</a>
+                <a class="btn sm" href={contact.cvUrl} download>Descargar</a>
               </div>
               <div class="hint">Previsualización dentro del Sistema, o descarga directa.</div>
             </div>
 
             <div class="card wide">
-              <div class="cardLabel">[ QUICK MESSAGE ]</div>
+              <div class="cardLabel">[ MENSAJE RÁPIDO ]</div>
               <p class="msg">
                 Hola Jano, vi tu portfolio y me interesó <span class="mono">[proyecto]</span>. ¿Podemos coordinar?
               </p>
@@ -287,23 +293,23 @@ const contact = {
                   target="_blank"
                   rel="noreferrer"
                 >
-                  Send via Gmail
+                  Enviar por Gmail
                 </a>
                 <a
                   class="btn sm"
                   href={`mailto:${contact.email}?subject=${encodeURIComponent("Contacto desde tu portfolio")}&body=${encodeURIComponent("Hola Jano,\n\nVi tu portfolio y me interesó [proyecto]. ¿Podemos coordinar?\n\nGracias!")}`}
                 >
-                  Open app
+                  Abrir en app
                 </a>
                 <button
                   class="btn sm"
                   type="button"
                   data-copy-msg="Hola Jano, vi tu portfolio y me interesó [proyecto]. ¿Podemos coordinar?"
                 >
-                  Copy message
+                  Copiar mensaje
                 </button>
               </div>
-              <div class="hint">Gmail funciona siempre. "Open app" depende de tu dispositivo.</div>
+              <div class="hint">Gmail funciona siempre. "Abrir en app" depende de tu dispositivo.</div>
             </div>
 
           </div>
@@ -313,17 +319,82 @@ const contact = {
 
   </div>
 
+  <!-- ============ QUEST DETAIL OVERLAY ============ -->
+  <div class="questOverlay" id="questOverlay" aria-hidden="true">
+    {projects.map((p, i) => (
+      <article class="questWindow" data-quest-id={i.toString()} role="dialog" aria-modal="true" aria-label={`Detalles de ${p.title}`}>
+        <div class="questHeader">
+          <span class="sysBracket">[</span>
+          <span class="sysTitle">PROYECTO</span>
+          <span class="sysBracket">]</span>
+          <span class="sysLine"></span>
+          <button type="button" class="cvClose" data-quest-close aria-label="Cerrar detalle">
+            <span class="cvCloseX" aria-hidden="true">×</span>
+            <span>CERRAR</span>
+          </button>
+        </div>
+
+        <div class="questBody hudScroll">
+          <div class="questImg">
+            <img src={p.image} alt={p.title} />
+            <span class="rankBadgeAbs questRankBig" style={`--rc:${rankColor(p.rank)}`}>
+              <span class="rankLetter">{p.rank ?? "?"}</span>
+              <span class="rankCls">RANK</span>
+            </span>
+          </div>
+
+          <div class="questInfo">
+            <div class="questHead">
+              <h2 class="questTitle">{p.title}</h2>
+              <span class:list={["pStatus", p.status === "COMPLETADO" ? "ok" : "pend"]}>
+                {p.status ?? "DISPONIBLE"}
+              </span>
+            </div>
+
+            <div class="questSection">
+              <div class="cardLabel">[ STACK ]</div>
+              <div class="questTags">
+                {p.tech.map((t) => (
+                  <span class="tag" style={`--c:${techColor(t)}`}>{t}</span>
+                ))}
+              </div>
+            </div>
+
+            <div class="questSection">
+              <div class="cardLabel">[ DESCRIPCIÓN ]</div>
+              <p class="questDesc">{p.desc}</p>
+            </div>
+
+            {(p.demo || p.repo) && (
+              <div class="questSection">
+                <div class="cardLabel">[ ENLACES ]</div>
+                <div class="questLinks">
+                  {p.demo && (
+                    <a class="btn primary" href={p.demo} target="_blank" rel="noreferrer">Ver Demo →</a>
+                  )}
+                  {p.repo && (
+                    <a class="btn" href={p.repo} target="_blank" rel="noreferrer">Ver Repo</a>
+                  )}
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      </article>
+    ))}
+  </div>
+
   <!-- ============ CV OVERLAY (modal) ============ -->
   <div class="cvOverlay" id="cvOverlay" aria-hidden="true">
-    <div class="cvWindow" role="dialog" aria-modal="true" aria-label="Dossier · CV de Jano Lorenzo Sanz">
+    <div class="cvWindow" role="dialog" aria-modal="true" aria-label="Expediente · CV de Jano Lorenzo Sanz">
       <div class="cvHeader">
         <span class="sysBracket">[</span>
-        <span class="sysTitle">DOSSIER&nbsp;·&nbsp;CV</span>
+        <span class="sysTitle">EXPEDIENTE&nbsp;·&nbsp;CV</span>
         <span class="sysBracket">]</span>
         <span class="sysLine"></span>
-        <button type="button" class="cvClose" data-cv-close aria-label="Cerrar dossier">
+        <button type="button" class="cvClose" data-cv-close aria-label="Cerrar expediente">
           <span class="cvCloseX" aria-hidden="true">×</span>
-          <span>CLOSE</span>
+          <span>CERRAR</span>
         </button>
       </div>
 
@@ -339,8 +410,8 @@ const contact = {
       <div class="cvFooter">
         <span class="cvFooterHint">Abrilo en una pestaña nueva o descargalo.</span>
         <div class="cvFooterBtns">
-          <a class="btn sm" href={contact.cvUrl} target="_blank" rel="noreferrer">Open in new tab</a>
-          <a class="btn sm primary" href={contact.cvUrl} download>Download PDF</a>
+          <a class="btn sm" href={contact.cvUrl} target="_blank" rel="noreferrer">Abrir en pestaña nueva</a>
+          <a class="btn sm primary" href={contact.cvUrl} download>Descargar PDF</a>
         </div>
       </div>
     </div>
@@ -397,6 +468,72 @@ const contact = {
       if (isViewName(v)) setView(v);
     });
 
+    // ============ QUEST DETAIL MODAL ============
+    const questOverlay = document.getElementById("questOverlay");
+
+    function openQuest(idx: number) {
+      if (!questOverlay) return;
+      questOverlay.querySelectorAll<HTMLElement>(".questWindow").forEach((w) => {
+        if (w.getAttribute("data-quest-id") === String(idx)) {
+          w.classList.add("is-active");
+        } else {
+          w.classList.remove("is-active");
+        }
+      });
+      questOverlay.setAttribute("data-open", "true");
+      questOverlay.setAttribute("aria-hidden", "false");
+      document.body.style.overflow = "hidden";
+    }
+
+    function closeQuest() {
+      if (!questOverlay) return;
+      questOverlay.removeAttribute("data-open");
+      questOverlay.setAttribute("aria-hidden", "true");
+      questOverlay.querySelectorAll<HTMLElement>(".questWindow").forEach((w) => {
+        w.classList.remove("is-active");
+      });
+      document.body.style.overflow = "";
+    }
+
+    document.addEventListener("click", (e: MouseEvent) => {
+      const t = e.target;
+      if (!(t instanceof Element)) return;
+
+      const card = t.closest<HTMLElement>("[data-quest-open]");
+      if (card && !t.closest("a, button")) {
+        const idx = card.getAttribute("data-quest-open");
+        if (idx !== null) openQuest(parseInt(idx, 10));
+        return;
+      }
+
+      if (t.closest("[data-quest-close]")) {
+        closeQuest();
+        return;
+      }
+
+      if (questOverlay && t === questOverlay) {
+        closeQuest();
+      }
+    });
+
+    document.addEventListener("keydown", (e: KeyboardEvent) => {
+      if (e.key === "Escape" && questOverlay?.hasAttribute("data-open")) {
+        closeQuest();
+      }
+    });
+
+    document.addEventListener("keydown", (e: KeyboardEvent) => {
+      if (e.key !== "Enter" && e.key !== " ") return;
+      const t = e.target;
+      if (!(t instanceof Element)) return;
+      const card = t.closest<HTMLElement>("[data-quest-open]");
+      if (card && card === t) {
+        e.preventDefault();
+        const idx = card.getAttribute("data-quest-open");
+        if (idx !== null) openQuest(parseInt(idx, 10));
+      }
+    });
+
     // ============ CV MODAL ============
     const cvOverlay = document.getElementById("cvOverlay");
 
@@ -451,8 +588,8 @@ const contact = {
         const text = btnEmail.getAttribute("data-copy") || "";
         try {
           await navigator.clipboard.writeText(text);
-          btnEmail.textContent = "Copied";
-          setTimeout(() => (btnEmail.textContent = "Copy"), 1200);
+          btnEmail.textContent = "Copiado";
+          setTimeout(() => (btnEmail.textContent = "Copiar"), 1200);
         } catch {
           prompt("Copialo:", text);
         }
@@ -464,8 +601,8 @@ const contact = {
         const text = btnMsg.getAttribute("data-copy-msg") || "";
         try {
           await navigator.clipboard.writeText(text);
-          btnMsg.textContent = "Copied";
-          setTimeout(() => (btnMsg.textContent = "Copy message"), 1200);
+          btnMsg.textContent = "Copiado";
+          setTimeout(() => (btnMsg.textContent = "Copiar mensaje"), 1200);
         } catch {
           prompt("Copialo:", text);
         }
@@ -539,12 +676,12 @@ const contact = {
     /* ============ SUB-CARD LABEL ============ */
     .cardLabel{
       font-family: var(--sys-font);
-      font-size: 11px;
+      font-size: 12px;
       letter-spacing: 3px;
       font-weight:700;
       color: var(--sys-violet-bright);
-      margin-bottom: 10px;
-      text-shadow: 0 0 6px rgba(167,139,250,.4);
+      margin-bottom: 12px;
+      text-shadow: 0 0 6px rgba(167,139,250,.45);
     }
 
     /* ============ STATUS GRID ============ */
@@ -605,37 +742,38 @@ const contact = {
     .idMeta{
       display: flex;
       flex-direction: column;
-      gap: 2px;
+      gap: 3px;
       min-width: 0;
     }
     .idLabel{
       font-family: var(--sys-font);
-      font-size: 10px;
-      font-weight: 600;
+      font-size: 11px;
+      font-weight: 700;
       letter-spacing: 2.5px;
       color: var(--sys-text-mute);
       text-transform: uppercase;
-      margin-top: 8px;
+      margin-top: 10px;
     }
     .idLabel:first-child{ margin-top: 0; }
     .idValue{
       font-family: var(--sys-font);
-      font-size: 14px;
+      font-size: 15px;
       font-weight: 600;
       color: var(--sys-text);
-      line-height: 1.2;
+      line-height: 1.3;
     }
     .idValueLg{
       font-family: var(--sys-font-title);
-      font-size: 18px;
+      font-size: 20px;
       font-weight: 700;
       color: #ffffff;
       letter-spacing: 1px;
-      text-shadow: 0 0 10px rgba(167,139,250,.4);
+      line-height: 1.2;
+      text-shadow: 0 0 12px rgba(167,139,250,.45);
     }
     .rowSplit{
       display: grid;
-      grid-template-columns: auto auto auto;
+      grid-template-columns: 1fr 1fr 1fr;
       gap: 14px;
       margin-top: 4px;
     }
@@ -690,7 +828,7 @@ const contact = {
 
     .skillName{
       color: var(--sys-text);
-      font-size: 13px;
+      font-size: 14px;
       font-weight: 600;
       letter-spacing: .5px;
     }
@@ -726,13 +864,13 @@ const contact = {
 
     .skillLabel{
       font-family: var(--sys-font-title);
-      font-size: 10px;
+      font-size: 11px;
       letter-spacing: 1.5px;
       color: var(--sys-violet-bright);
       text-transform: uppercase;
-      min-width: 92px;
+      min-width: 100px;
       text-align: right;
-      opacity: .85;
+      opacity: .9;
     }
 
     /* ============ TAGS / SKILLS ============ */
@@ -853,15 +991,18 @@ const contact = {
       padding: 12px;
       min-height: 150px;
       position: relative;
+      cursor: pointer;
       transition: border-color 160ms ease, transform 160ms ease, box-shadow 160ms ease;
       clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
     }
-    .pCard:hover{
+    .pCard:hover,
+    .pCard:focus-visible{
       border-color: var(--sys-border-strong);
       transform: translateY(-2px);
       box-shadow:
-        0 0 0 1px rgba(167,139,250,.35),
-        0 8px 30px rgba(167,139,250,.2);
+        0 0 0 1px rgba(167,139,250,.4),
+        0 8px 30px rgba(167,139,250,.22);
+      outline: none;
     }
 
     .pImg{
@@ -1029,6 +1170,167 @@ const contact = {
     .hudScroll::-webkit-scrollbar-thumb:hover{
       background: rgba(167,139,250,.55);
       box-shadow: 0 0 8px rgba(167,139,250,.4);
+    }
+
+    /* ============ QUEST DETAIL MODAL ============ */
+    .questOverlay{
+      position: fixed;
+      inset: 0;
+      z-index: 999;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      background: rgba(4,2,10,.82);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+    }
+    .questOverlay[data-open="true"]{
+      display: flex;
+      animation: cvFadeIn 220ms ease both;
+    }
+
+    .questWindow{
+      display: none;
+      width: min(820px, 100%);
+      height: min(720px, calc(100vh - 48px));
+      background: linear-gradient(180deg, rgba(22,17,38,.98), rgba(10,7,18,1));
+      border: 1px solid var(--sys-border-strong);
+      box-shadow:
+        0 0 0 1px rgba(167,139,250,.18),
+        0 0 50px rgba(167,139,250,.32),
+        0 30px 100px rgba(0,0,0,.8);
+      clip-path: polygon(18px 0, 100% 0, 100% calc(100% - 18px), calc(100% - 18px) 100%, 0 100%, 0 18px);
+      flex-direction: column;
+      position: relative;
+      overflow: hidden;
+      animation: cvOpen 380ms cubic-bezier(.2,.85,.2,1) both;
+    }
+    .questWindow.is-active{
+      display: flex;
+    }
+    .questWindow::before,
+    .questWindow::after{
+      content:"";
+      position:absolute;
+      width: 22px; height: 22px;
+      border: 1.5px solid var(--sys-violet-bright);
+      pointer-events: none;
+      filter: drop-shadow(0 0 4px var(--sys-glow));
+      z-index: 2;
+    }
+    .questWindow::before{ top:0; left:0; border-right:none; border-bottom:none; }
+    .questWindow::after{ bottom:0; right:0; border-left:none; border-top:none; }
+
+    .questHeader{
+      flex: 0 0 56px;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 0 22px 0 28px;
+      border-bottom: 1px solid var(--sys-border-strong);
+      background: linear-gradient(180deg, rgba(30,22,52,.98), rgba(18,12,32,.98));
+      font-family: var(--sys-font);
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      font-size: 14px;
+      color: var(--sys-violet-bright);
+      position: relative;
+      z-index: 3;
+    }
+
+    .questBody{
+      flex: 1 1 auto;
+      min-height: 0;
+      overflow: auto;
+      padding: 20px 22px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .questImg{
+      width: 100%;
+      max-height: 280px;
+      position: relative;
+      border: 1px solid var(--sys-border-strong);
+      overflow: hidden;
+      background: #03060c;
+      clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
+      flex-shrink: 0;
+    }
+    .questImg img{
+      width: 100%;
+      height: 100%;
+      max-height: 280px;
+      object-fit: cover;
+      display: block;
+    }
+    .questRankBig{
+      top: 10px; left: 10px;
+      padding: 6px 10px;
+    }
+    .questRankBig .rankLetter{ font-size: 22px; }
+    .questRankBig .rankCls{ font-size: 8px; }
+
+    .questInfo{
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .questHead{
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .questTitle{
+      margin: 0;
+      font-family: var(--sys-font-title);
+      font-size: 22px;
+      font-weight: 700;
+      color: #ffffff;
+      letter-spacing: 1px;
+      line-height: 1.2;
+      text-shadow: 0 0 12px rgba(167,139,250,.45);
+    }
+    .questSection .cardLabel{
+      margin-bottom: 8px;
+    }
+    .questTags{
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .questDesc{
+      color: var(--sys-text-dim);
+      font-family: var(--sys-font);
+      font-size: 15px;
+      line-height: 1.7;
+      margin: 0;
+    }
+    .questLinks{
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    @media (max-width: 520px){
+      .questOverlay{ padding: 8px; }
+      .questWindow{
+        height: calc(100vh - 16px);
+        clip-path: polygon(14px 0, 100% 0, 100% calc(100% - 14px), calc(100% - 14px) 100%, 0 100%, 0 14px);
+      }
+      .questHeader{ height: 50px; flex-basis: 50px; padding: 0 14px 0 22px; font-size: 12px; letter-spacing: 2px; }
+      .questBody{ padding: 16px; gap: 14px; }
+      .questImg{ max-height: 200px; }
+      .questImg img{ max-height: 200px; }
+      .questTitle{ font-size: 18px; }
+      .questDesc{ font-size: 14px; }
+      .questLinks .btn{ flex: 1; }
     }
 
     /* ============ CV MODAL ============ */
