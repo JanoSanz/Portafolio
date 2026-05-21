@@ -51,9 +51,12 @@ const skillTree = [
   {
     group: "HERRAMIENTAS",
     items: [
-      { name: "Git / GitHub", rank: 2, label: "Funcional" },
-      { name: "Power BI",     rank: 3, label: "Intermedio" },
-      { name: "Astro",        rank: 3, label: "Intermedio" },
+      { name: "Git / GitHub",     rank: 2, label: "Funcional" },
+      { name: "Power BI",         rank: 3, label: "Intermedio" },
+      { name: "Astro",            rank: 3, label: "Intermedio" },
+      { name: "Office / Sheets",  rank: 5, label: "Avanzado" },
+      { name: "VS Code",          rank: 3, label: "Intermedio" },
+      { name: "Vercel / Netlify", rank: 2, label: "Funcional" },
     ],
   },
 ];
@@ -116,8 +119,17 @@ const contact = {
               </div>
             </div>
 
-            <div class="card abilCard">
-              <div class="cardLabel">[ HABILIDADES ]</div>
+            <div
+              class="card abilCard"
+              data-skills-open
+              role="button"
+              tabindex="0"
+              aria-label="Ver todas las habilidades"
+            >
+              <div class="cardLabel">
+                [ HABILIDADES ]
+                <span class="cardLabelHint">click&nbsp;para&nbsp;ampliar</span>
+              </div>
               {skillTree.map((g) => (
                 <div class="skillGroup">
                   <div class="skillGroupLabel">[ {g.group} ]</div>
@@ -319,6 +331,43 @@ const contact = {
 
   </div>
 
+  <!-- ============ SKILLS OVERLAY (modal) ============ -->
+  <div class="skillsOverlay" id="skillsOverlay" aria-hidden="true">
+    <div class="skillsWindow" role="dialog" aria-modal="true" aria-label="Vista completa de habilidades">
+      <div class="cvHeader">
+        <span class="sysBracket">[</span>
+        <span class="sysTitle">HABILIDADES</span>
+        <span class="sysBracket">]</span>
+        <span class="sysLine"></span>
+        <button type="button" class="cvClose" data-skills-close aria-label="Cerrar habilidades">
+          <span class="cvCloseX" aria-hidden="true">×</span>
+          <span>CERRAR</span>
+        </button>
+      </div>
+
+      <div class="skillsBody hudScroll">
+        {skillTree.map((g) => (
+          <div class="skillGroup">
+            <div class="skillGroupLabel">[ {g.group} ]</div>
+            <ul class="skillList">
+              {g.items.map((s) => (
+                <li class="skillItem">
+                  <span class="skillName">{s.name}</span>
+                  <span class="skillDots" aria-label={`${s.rank} of 5`}>
+                    {Array.from({ length: 5 }).map((_, i) => (
+                      <span class:list={["dot", i < s.rank ? "on" : "off"]}></span>
+                    ))}
+                  </span>
+                  <span class="skillLabel">{s.label}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+
   <!-- ============ QUEST DETAIL OVERLAY ============ -->
   <div class="questOverlay" id="questOverlay" aria-hidden="true">
     {projects.map((p, i) => (
@@ -466,6 +515,57 @@ const contact = {
     window.addEventListener("hashchange", () => {
       const v = location.hash.replace("#", "");
       if (isViewName(v)) setView(v);
+    });
+
+    // ============ SKILLS MODAL ============
+    const skillsOverlay = document.getElementById("skillsOverlay");
+
+    function openSkills() {
+      if (!skillsOverlay) return;
+      skillsOverlay.setAttribute("data-open", "true");
+      skillsOverlay.setAttribute("aria-hidden", "false");
+      document.body.style.overflow = "hidden";
+    }
+
+    function closeSkills() {
+      if (!skillsOverlay) return;
+      skillsOverlay.removeAttribute("data-open");
+      skillsOverlay.setAttribute("aria-hidden", "true");
+      document.body.style.overflow = "";
+    }
+
+    document.addEventListener("click", (e: MouseEvent) => {
+      const t = e.target;
+      if (!(t instanceof Element)) return;
+
+      const opener = t.closest("[data-skills-open]");
+      if (opener && !t.closest("a, button")) {
+        openSkills();
+        return;
+      }
+      if (t.closest("[data-skills-close]")) {
+        closeSkills();
+        return;
+      }
+      if (skillsOverlay && t === skillsOverlay) {
+        closeSkills();
+      }
+    });
+
+    document.addEventListener("keydown", (e: KeyboardEvent) => {
+      if (e.key === "Escape" && skillsOverlay?.hasAttribute("data-open")) {
+        closeSkills();
+      }
+      if ((e.key === "Enter" || e.key === " ")) {
+        const t = e.target;
+        if (t instanceof Element) {
+          const card = t.closest("[data-skills-open]");
+          if (card && card === t) {
+            e.preventDefault();
+            openSkills();
+          }
+        }
+      }
     });
 
     // ============ QUEST DETAIL MODAL ============
@@ -690,16 +790,22 @@ const contact = {
       min-height:0;
       overflow:auto;
       margin-top: 12px;
+      padding-top: 4px;
       padding-right: 6px;
     }
 
     .statusGrid{
       display: grid;
       grid-template-columns: 1.2fr 1fr;
+      grid-auto-rows: min-content;
       gap: 12px;
       align-content: start;
     }
-    .bioCard{ grid-column: 1 / -1; }
+    .statusGrid > .idCard    { grid-column: 1; grid-row: 1; }
+    .statusGrid > .skillCard { grid-column: 1; grid-row: 2; }
+    .statusGrid > .actionCard{ grid-column: 1; grid-row: 3; }
+    .statusGrid > .abilCard  { grid-column: 2; grid-row: 1 / span 3; align-self: start; }
+    .statusGrid > .bioCard   { grid-column: 1 / -1; grid-row: 4; }
 
     .card{
       border: 1px solid var(--sys-border);
@@ -794,7 +900,7 @@ const contact = {
     }
 
     /* ============ SKILL TREE ============ */
-    .skillGroup{ margin-bottom: 12px; }
+    .skillGroup{ margin-bottom: 14px; }
     .skillGroup:last-child{ margin-bottom: 0; }
 
     .skillGroupLabel{
@@ -803,7 +909,7 @@ const contact = {
       font-size: 10px;
       letter-spacing: 2.5px;
       color: var(--sys-text-mute);
-      margin-bottom: 6px;
+      margin-bottom: 8px;
       padding-bottom: 4px;
       border-bottom: 1px dashed rgba(167,139,250,.2);
     }
@@ -814,12 +920,12 @@ const contact = {
       padding: 0;
       display: flex;
       flex-direction: column;
-      gap: 4px;
+      gap: 6px;
     }
 
     .skillItem{
       display: grid;
-      grid-template-columns: 1fr auto auto;
+      grid-template-columns: 130px 1fr 100px;
       align-items: center;
       gap: 14px;
       font-family: var(--sys-font);
@@ -972,6 +1078,7 @@ const contact = {
       min-height:0;
       overflow:auto;
       margin-top: 8px;
+      padding-top: 4px;
       padding-right: 6px;
     }
     .gridProjects{
@@ -1170,6 +1277,139 @@ const contact = {
     .hudScroll::-webkit-scrollbar-thumb:hover{
       background: rgba(167,139,250,.55);
       box-shadow: 0 0 8px rgba(167,139,250,.4);
+    }
+
+    /* ============ ABILITIES CARD (clickeable) ============ */
+    .abilCard{
+      cursor: pointer;
+      transition: border-color 160ms ease, box-shadow 160ms ease, transform 160ms ease;
+    }
+    .abilCard:hover,
+    .abilCard:focus-visible{
+      border-color: var(--sys-border-strong);
+      box-shadow:
+        0 0 0 1px rgba(167,139,250,.32),
+        0 6px 24px rgba(167,139,250,.18);
+      transform: translateY(-1px);
+      outline: none;
+    }
+    .cardLabelHint{
+      font-family: var(--sys-font);
+      font-size: 9px;
+      font-weight: 500;
+      letter-spacing: 1.5px;
+      color: var(--sys-text-mute);
+      margin-left: 10px;
+      text-transform: uppercase;
+      opacity: .8;
+    }
+
+    /* ============ SKILLS MODAL ============ */
+    .skillsOverlay{
+      position: fixed;
+      inset: 0;
+      z-index: 998;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      background: rgba(4,2,10,.82);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+    }
+    .skillsOverlay[data-open="true"]{
+      display: flex;
+      animation: cvFadeIn 220ms ease both;
+    }
+
+    .skillsWindow{
+      width: min(720px, 100%);
+      height: min(680px, calc(100vh - 48px));
+      background: linear-gradient(180deg, rgba(22,17,38,.98), rgba(10,7,18,1));
+      border: 1px solid var(--sys-border-strong);
+      box-shadow:
+        0 0 0 1px rgba(167,139,250,.18),
+        0 0 50px rgba(167,139,250,.32),
+        0 30px 100px rgba(0,0,0,.8);
+      clip-path: polygon(18px 0, 100% 0, 100% calc(100% - 18px), calc(100% - 18px) 100%, 0 100%, 0 18px);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow: hidden;
+      animation: cvOpen 380ms cubic-bezier(.2,.85,.2,1) both;
+    }
+    .skillsWindow::before,
+    .skillsWindow::after{
+      content:"";
+      position:absolute;
+      width: 22px; height: 22px;
+      border: 1.5px solid var(--sys-violet-bright);
+      pointer-events: none;
+      filter: drop-shadow(0 0 4px var(--sys-glow));
+      z-index: 2;
+    }
+    .skillsWindow::before{ top:0; left:0; border-right:none; border-bottom:none; }
+    .skillsWindow::after{ bottom:0; right:0; border-left:none; border-top:none; }
+
+    .skillsBody{
+      flex: 1 1 auto;
+      min-height: 0;
+      overflow: auto;
+      padding: 24px 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 22px;
+    }
+    .skillsBody .skillGroup{
+      margin-bottom: 0;
+    }
+    .skillsBody .skillGroupLabel{
+      font-size: 12px;
+      letter-spacing: 3px;
+      color: var(--sys-violet-bright);
+      margin-bottom: 12px;
+      padding-bottom: 6px;
+      border-bottom: 1px dashed rgba(167,139,250,.35);
+    }
+    .skillsBody .skillList{
+      gap: 10px;
+    }
+    .skillsBody .skillItem{
+      grid-template-columns: 200px 1fr 130px;
+      gap: 18px;
+      padding: 6px 0;
+    }
+    .skillsBody .skillName{
+      font-size: 16px;
+      font-weight: 600;
+    }
+    .skillsBody .skillDots{
+      gap: 6px;
+    }
+    .skillsBody .dot{
+      width: 12px;
+      height: 12px;
+    }
+    .skillsBody .skillLabel{
+      font-size: 12px;
+      min-width: 130px;
+      opacity: 1;
+    }
+
+    @media (max-width: 520px){
+      .skillsOverlay{ padding: 8px; }
+      .skillsWindow{
+        height: calc(100vh - 16px);
+        clip-path: polygon(14px 0, 100% 0, 100% calc(100% - 14px), calc(100% - 14px) 100%, 0 100%, 0 14px);
+      }
+      .skillsBody{ padding: 16px; gap: 16px; }
+      .skillsBody .skillItem{
+        grid-template-columns: 130px 1fr 88px;
+        gap: 10px;
+      }
+      .skillsBody .skillName{ font-size: 13px; }
+      .skillsBody .skillLabel{ min-width: 88px; font-size: 10px; }
+      .skillsBody .dot{ width: 9px; height: 9px; }
     }
 
     /* ============ QUEST DETAIL MODAL ============ */
@@ -1506,6 +1746,14 @@ const contact = {
     /* ============ RESPONSIVE ============ */
     @media (max-width: 820px){
       .statusGrid{ grid-template-columns: 1fr; }
+      .statusGrid > .idCard,
+      .statusGrid > .skillCard,
+      .statusGrid > .actionCard,
+      .statusGrid > .abilCard,
+      .statusGrid > .bioCard{
+        grid-column: 1;
+        grid-row: auto;
+      }
       .idCard{ grid-template-columns: 110px 1fr; }
       .avatar{ width: 110px; height: 110px; }
     }
@@ -1518,9 +1766,9 @@ const contact = {
       .avatar{ width: 100%; height: 180px; }
       .idValueLg{ font-size: 16px; }
       .rowSplit{ grid-template-columns: 1fr 1fr; gap: 10px; }
-      .skillItem{ gap: 10px; }
+      .skillItem{ grid-template-columns: 110px auto 78px; gap: 10px; }
       .skillName{ font-size: 12px; }
-      .skillLabel{ min-width: 70px; font-size: 9px; letter-spacing: 1px; }
+      .skillLabel{ min-width: 78px; font-size: 9px; letter-spacing: 1px; }
       .dot{ width: 7px; height: 7px; }
       .skillDots{ gap: 4px; }
       .pCard{ flex-direction: column; }
