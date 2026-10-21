@@ -1,16 +1,15 @@
 ## Sobre mí
-Estudiante de Ingeniería Informática (UNLaM, en curso). Formación práctica en **Desarrollo Web (HTML/CSS/JS/Astro)** y **Datos/BI (SQL, Power BI)**. Enfoque en **interfaces limpias**, consumo de **APIs** y **dashboards** con KPIs.
+Estudiante de Ingeniería Informática (UNLaM, 1er año, cursando materias de 2º). Hice cursos de **Desarrollo Web (HTML/CSS/JS/Astro)**, **SQL** y **Power BI**, y armé mis propios proyectos con Astro.
 
-- **Tecnologías:** HTML, CSS, JavaScript, Astro, SQL, Power BI, Power Query, DAX, Git/GitHub  
-- **Objetivo:** Full‑Stack Jr / Data Jr  
+- **Tecnologías:** HTML, CSS, JavaScript, Astro, SQL, Power BI, Git/GitHub  
+- **Objetivo:** primer trabajo en IT como Trainee, pasante o en Soporte Técnico  
 - **Universidad:** UNLaM  
-- **Ubicación:** Buenos Aires, Argentina  
-- **Contacto:** janosanz04@gmail.com · github.com/JanoSanz · linkedin.com/in/jano-sanz-875b9b2a5/
+- **Ubicación:** Ramos Mejía (GBA Oeste), Argentina  
+- **Contacto:** janosanz04@gmail.com · github.com/JanoSanz · linkedin.com/in/janolsanz
 
-## Experiencia / Proyectos
-- **Mini SPA con Astro + JS:** consumo de API pública con `fetch`, manejo de loading/errores y paginación; **UI responsive**; deploy (Netlify/Vercel).
-- **Dashboard de Ventas (Power BI):** ETL con **Power Query**, métricas **DAX** (Ventas, Ticket Prom., %YoY), **segmentadores** por fecha/región; modelo estrella; publicación en Service.
-- **SQL Reporting:** consultas con **JOINs**, subqueries, CTE y vistas; KPIs mensuales y top N; scripts versionados y resultados en CSV.
+## Proyectos
+- **CineCerca (Astro + JS):** buscador de películas y cines cercanos con la API de TMDB, mapa con Leaflet, geolocalización, filtros, favoritos y tema claro/oscuro.
+- **Este portafolio (Astro):** diseñado y desarrollado desde cero, publicado en Vercel.
 
 ## Certificaciones (resumen)
 Coderhouse (**Desarrollo Web**, **JavaScript**, **SQL**) · Santander Open Academy (**Power BI**).
