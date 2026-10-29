@@ -1,5 +1,5 @@
 ## Sobre mí
-Estudiante de Ingeniería Informática (UNLaM, 1er año, cursando materias de 2º). Hice cursos de **Desarrollo Web (HTML/CSS/JS/Astro)**, **SQL** y **Power BI**, y armé mis propios proyectos con Astro.
+Estudiante de Ingeniería Informática (UNLaM, 2º año). Hice cursos de **Desarrollo Web (HTML/CSS/JS/Astro)**, **SQL** y **Power BI**, y armé mis propios proyectos con Astro.
 
 - **Tecnologías:** HTML, CSS, JavaScript, Astro, SQL, Power BI, Git/GitHub  
 - **Objetivo:** primer trabajo en IT como Trainee, pasante o en Soporte Técnico  
